@@ -33,7 +33,7 @@ public class DriverUtils {
     }
 
     static {
-        gridUrl = System.getProperty("test.selenium.hub.url", "http://localhost:4444/wd/hub");
+            gridUrl = System.getProperty("test.selenium.hub.url", "http://127.0.0.2:4400/wd/hub");
         browsersUnderTest = System.getProperty("test.selenium.browsers", "chrome");
         homePageURL = System.getProperty("test.selenium.homepage", "https://www.propertyfinder.ae/");
     }
@@ -65,7 +65,7 @@ public class DriverUtils {
             driver.manage().window().maximize();
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         }
-        WebDriverWait wait = new WebDriverWait(driver, 120);
+        wait = new WebDriverWait(driver, 120);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 

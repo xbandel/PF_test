@@ -15,12 +15,13 @@ public class VillaSearchTest extends Base {
     String itemTitle;
     String itemPrice;
 
-    /*public VillaSearchTest(String browser) {
+    public VillaSearchTest(String browser) {
         super(browser);
     }
-*/
+
     @Test
     public void villaSearchTest(){
+
         driver.get(homePageURL);
         SearchProperty searchProperty = new SearchProperty(driver);
         searchProperty.openHomePage();

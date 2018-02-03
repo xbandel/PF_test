@@ -7,10 +7,16 @@ public class AgentSearchTest extends Base{
 
     public static String homePageURL = "https://www.propertyfinder.ae/";
 
+    public AgentSearchTest(String browser) {
+        super(browser);
+    }
+
     @Test
     public void selectAgentLanguagesNationality() throws InterruptedException {
         driver.get(homePageURL);
         AgentPage agentPage = new AgentPage();
+        agentPage.setDriver(DriverUtils.getDriver());
+        agentPage.setWait(DriverUtils.getWait());
         agentPage.clickFindAgent();
         agentPage.clickLanguagesButton();
         agentPage.selectLanguages("Hindi");

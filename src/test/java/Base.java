@@ -59,6 +59,7 @@ public class Base {
     @Before
     public void setUp() throws MalformedURLException {
         DriverUtils.startUp(browser);
+
         screenshotTestRule.setDriver(driver);
     }
 

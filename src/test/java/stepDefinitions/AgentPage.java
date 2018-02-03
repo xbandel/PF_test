@@ -28,36 +28,36 @@ public class AgentPage  {
 
 
 
-    public static String findAgentButton = "//header//a[@href='/en/find-agent']";
+    public static String findAgentButton = "//nav[@class='header-nav']//a[contains(text(), 'Find agent')]";
     public static String agentsHeaderOpen = "//h1[text()='Our top agents']";
 
-    public static String languages = "//button[@type='button' and @class='ms-choice']/span[text()='Languages']";
-    public static String languageDropDown = "//div[@class='ms-drop multiple']";
-    public static String languageSelect = "//div[@class='ms-drop multiple']//li[contains(text(), '%s')]";
-    public static String findButton = "//button[@type='submit']";
-    public static String searchResults = "//div[@class='tile-block-area']";
-    public static String header = "//h1[@class='serp-h1']";
-    public static String nationality = "//button[@type='button' and @class='ms-choice']/span[text()='Nationality']";
-    public static String natDropDown = "//div[@class='ms-drop ']";
-    public static String nationalitySelect = "//div[@class='ms-drop ']//li[contains(text(), '%s')]";
-    public static String natButtonNew = "//button[@type='button' and @class='ms-choice']/span[text()='India']";
+    public static String languages = "//div[text()='Languages']";
+    public static String languageSelect = "//div[text()='%s']";
+    public static String arLang = "div[text()='Arabic']";
+    public static String findButton = "//button[text()='Find']";
+    public static String searchResults = "//div[@data-qs='agent-list']";
+    public static String header = "//h1[@class='title']";
+    public static String nationality = "//div[text()='Nationality']";
+    public static String nationalitySelect = "//div[text()='%s']";
+    public static String indNat = "div[text()='India']";
+    public static String natButtonNew = "//div[@class='searchform_column searchform_column-serp']//div[text()='India']";
 
-    public static String agentDet = "//div[@class='tile-block-area']/div[@class='tile-block-container'][%s]";
+    public static String agentDet = "(//div[@class='tile_content'])[%s]";
     public static String agentContact = "//h3[text()='Contact this agent']";
 
-    public static String aboutMeTab = "//button[@data-tab='aboutMe']";
-    public static String aboutMeText = "//div[@class='user-tab user-tab-about-me active']";
+    public static String aboutMeTab = "//a[@href='#tab-about']";
+    public static String aboutMeText = "//div[@data-qs-content='tab-about']";
 
-    public static String agentName = "//h1[@class='user-name']";
-    public static String agentNat = "//div[@class='user-nationality']/div[@class='content']";
-    public static String agentLang = "//div[@class='user-language']/div[@class='content']";
-    public static String agentLicense = "//div[@class='user-rera-no']/div[@class='content']";
-    public static String agentExp = "//div[@class='user-experience']/div[@class='content']";
-    public static String agentCompany = "//div[@class='company-name']";
-    public static String agentPhone = "//div[@class='user-action-btns']/a[@data-lead='phone-button']";
-    public static String agentListings = "//div[@class='user-active-listing']/div[@class='content']/a";
-    public static String agentLinkedin = "//div[@class='user-linkedin']/div[@class='content']/a";
-    public static String lang = "//div[@class='language-wrapper']/a[@class='ar change-language-link']";
+    public static String agentName = "//h1[@class='title title-size1 bioinfo_name']";
+    public static String agentNat = "//span[text()='Nationality:']//following-sibling::span[@class='table_column']";
+    public static String agentLang = "//span[text()='Languages:']//following-sibling::span[@class='table_column']";
+    public static String agentLicense = "//span[text()='License No.:']//following-sibling::span[@class='table_column']";
+    public static String agentExp = "//span[text()='Experience since:']//following-sibling::span[@class='table_column']";
+    public static String agentCompany = "//div[@class='brokerthumbnail_text']/p[1]";
+    public static String agentPhone = "//a[@data-qs='phone-button']";
+    public static String agentListings = "//a[@href='#tab-properties']";
+    public static String agentLinkedin = "//a[@class='link' and contains(text(), 'View profile')]";
+    public static String lang = "//header//div[@class='globalswitch_language']/a";
     public static String arabic_header = "//h3[text()='تواصل مع الوكيل']";
 
     public int numberAgents1;
@@ -71,6 +71,14 @@ public class AgentPage  {
     WebDriver driver;
     WebDriverWait wait;
     String homePage;
+
+    public void setDriver(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    public void setWait(WebDriverWait wait) {
+        this.wait = wait;
+    }
 
     @Rule
     public ScreenshotTestRule screenshotTestRule = new ScreenshotTestRule(driver);
@@ -103,6 +111,7 @@ public class AgentPage  {
 
     @When("user click Find Agent button")
     public void clickFindAgent() {
+
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(findAgentButton)));
         WebElement clickFindAgentButton = driver.findElement(By.xpath(findAgentButton));
         clickFindAgentButton.click();
@@ -114,12 +123,12 @@ public class AgentPage  {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(languages)));
         WebElement languageButton = driver.findElement(By.xpath(languages));
         languageButton.click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(languageDropDown)));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(arLang)));
     }
 
     @When("user select language (.)")
     public void selectLanguages(String language) {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(languageDropDown)));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(arLang)));
         String fullXpath = String.format(languageSelect, language);
         WebElement langSelect = driver.findElement(By.xpath(fullXpath));
         langSelect.click();
@@ -156,7 +165,7 @@ public class AgentPage  {
 
     @When("^user select Nationality$")
     public void selectNationality(String nat) throws InterruptedException {
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(natDropDown)));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(indNat)));
         String fullXpath = String.format(nationalitySelect, nat);
         WebElement natSelect = driver.findElement(By.xpath(fullXpath));
         natSelect.click();
@@ -196,7 +205,7 @@ public class AgentPage  {
             writer.newLine();
             writer.write(driver.findElement(By.xpath(aboutMeText)).getText());
             writer.newLine();
-            writer.write(driver.findElement(By.xpath(agentPhone)).getAttribute("data-phone"));
+            writer.write(driver.findElement(By.xpath(agentPhone)).getAttribute("href"));
             writer.newLine();
             writer.write(driver.findElement(By.xpath(agentCompany)).getText());
             writer.newLine();
